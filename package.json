@@ -1,0 +1,24 @@
+{
+  "name": "lab5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hwang763/se3316-lab5-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hwang763/se3316-lab5-website/issues"
+  },
+  "homepage": "https://github.com/hwang763/se3316-lab5-website#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.13"
+  }
+}
