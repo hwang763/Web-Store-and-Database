@@ -1,3 +1,29 @@
+<button (click)="onClick()">Retrieve Private Item List</button>
+<div *ngIf="showMe=='user'||showMe=='manager'">
 <h1>
     Items List (Including Price and Quantity):
 </h1>
+    <div *ngIf="showMe=='manager'">
+        <h2>Add a New Item</h2>
+        <p>Name:<input type="text" name=""/></p>
+        <p>Description:<input type="text" name=""/></p>
+        <p>Price: $<input type="number" name=""/></p>
+        <p>Tax:<input type="number" name=""/>%</p>
+        <p>Quantity:<input type="number" name=""/></p>
+       
+        <button>Add Item</button>
+        <h2>Update and Existing Item</h2>
+        <p>Update an Item (Enter Item Name) :<input type="text" name=""/></p>
+        <p>Description:<input type="text" name=""/></p>
+        <p>Price: $<input type="number" name=""/></p>
+        <p>Tax:<input type="number" name=""/>%</p>
+        <p>Quantity:<input type="number" name=""/></p>
+       
+        <button>Update</button>
+        <h2>Delete an Item</h2>
+        <p>Item to Delete: <input type="text" name=""/></p>
+        <button>Delete</button>
+        
+        
+    </div>
+</div>

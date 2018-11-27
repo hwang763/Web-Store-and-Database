@@ -10,11 +10,15 @@ export class LoginComponent implements OnInit {
   showForm:boolean = false;
   showNew:boolean =false;
   displayLogin(){
-    this.showForm = true;
+    this.showForm = !this.showForm;
   }
   
   createNew(){
-    this.showNew = true;
+    this.showNew = !this.showNew;
+  }
+  
+  logout(){
+   location.reload();
   }
   constructor() { }
 

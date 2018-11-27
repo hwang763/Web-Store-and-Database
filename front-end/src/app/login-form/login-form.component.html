@@ -1,7 +1,7 @@
 <div *ngIf="showMe">
-<h>Email:</h>
-<input type="text" name=""/><br>
-<h>Password:</h>
-<input type="text" name=""/><br>
-<button>Login</button>
+<p>Email:</p>
+<input type="email" name="" #emailLogin /><br>
+<p>Password:</p>
+<input type="text" name="" #passLogin /><br>
+<button (click)="login($event,emailLogin.value,passLogin.value)">Login</button>
 </div>

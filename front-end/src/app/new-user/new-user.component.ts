@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import Input from '@angular/core';
+import {Input} from '@angular/core';
 @Component({
   selector: 'new-user',
   templateUrl: './new-user.component.html',
