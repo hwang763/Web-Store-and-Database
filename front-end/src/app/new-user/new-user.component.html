@@ -1,9 +1,9 @@
 <div *ngIf ="showNewUser">
     <p>Email:</p>
-    <input type="text" name=""/> <br>
+    <input type="text" name="" #userEmail/> <br>
     <p>Password:</p>
     <input type="text" name=""/> <br>
     <p>Please confirm your password:</p>
-    <input type="text" name=""/> <br>
-    <button>Create New User</button>
+    <input type="text" name="" #userPassword/> <br>
+    <button (click)="onClick($event,userEmail.value,userPassword.value)">Create New User</button>
 </div>

@@ -22,6 +22,7 @@ export class LoginFormComponent implements OnInit {
       this.userType="user";
     }
     this.itemLisService.setAccount(this.userType);
+    
     console.log(this.userType);
   }
 

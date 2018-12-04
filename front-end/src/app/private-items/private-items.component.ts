@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ItemListService} from '../item-list.service'
+import {Fruits} from '../fruits';
+import {HttpClient} from '@angular/common/http';
 @Component({
   selector: 'app-private-items',
   templateUrl: './private-items.component.html',
@@ -8,7 +10,7 @@ import {ItemListService} from '../item-list.service'
 export class PrivateItemsComponent implements OnInit {
   showMe:string;
 
-  constructor(private itemListService:ItemListService) { 
+  constructor(private itemListService:ItemListService, private http:HttpClient) { 
     
   }
   ngOnInit(){
@@ -27,6 +29,20 @@ export class PrivateItemsComponent implements OnInit {
    }
   }
   
+ addFruit(event:any,fruitName:String,fruitDescript:String,fruitPrice:Number,fruitTax:Number,fruitQuantity:Number){
+   this.http.post('/api/items',{
+       name:fruitName,
+       descript:fruitDescript,
+       price:fruitPrice,
+       tax:fruitTax,
+       quantity:fruitQuantity
+     })
+     .subscribe(
+       (data:any)=>{
+         console.log(data);
+       })
+     
+  }
   getPrivateItems(){} //gets the list of private items
   
 }

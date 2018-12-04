@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "target": "https://hwang763-se3316-lab5-hwang763.c9users.io:8081",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "info"
+    }
+}
