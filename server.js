@@ -59,6 +59,22 @@ var userSchema = new Schema({
 
 var User = mongoose.model("User",userSchema);
 module.exports=User;
+
+var dmcaSchema = new Schema({
+    type:String,
+    descript:String
+})
+
+var DMCA = mongoose.model("DMCA",dmcaSchema);
+module.exports=DMCA;
+
+var disputeSchema = new Schema({
+    type:String,
+    decript:String
+})
+
+var Dispute = mongoose.model("Dispute",disputeSchema);
+module.exports=Dispute;
 // creating routes for the api
 
 
@@ -67,6 +83,34 @@ app.get('/api',function(req, res){
 });
 
 // the following get and post are just general requests
+app.get('/api/DMCA/:notice_type',function(req, res) {
+    var type = req.params.notice_type;
+    DMCA.findOne({type})
+    .then(dmca=>res.json(dmca))
+    .catch(err=>console.log(err));
+});
+
+app.post('/api/DMCA',function(req,res){
+    DMCA.create({
+        type:req.body.type,
+        descript:req.body.descript
+    }).then(dmca=>{
+        res.json(dmca);
+        console.log(dmca);
+    });
+});
+
+app.put('/api/DMCA/:notice_type',function(req,res){
+    var type=req.params.notice_type;
+    DMCA.findOne({type})
+    .then(dmca => {
+        dmca.update({
+            descript:req.body.descript
+        })
+        .then(user => res.json(user));
+    })
+    .catch(err => console.log(err));
+});
 
 app.get('/api/items',cors(),function(req,res,next){
     console.log('getting activities');

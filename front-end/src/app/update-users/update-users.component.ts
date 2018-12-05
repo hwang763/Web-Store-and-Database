@@ -10,7 +10,7 @@ export class UpdateUsersComponent implements OnInit {
 updateUser(event:any,userEmail:String,userActive:String,userType:String){
   console.log(userEmail);
   console.log(userActive.toLowerCase());
-  console.log(userType.toLowerCase();
+  console.log(userType.toLowerCase());
   if(userEmail==""){
     alert("Please enter a user to modify!");
   }

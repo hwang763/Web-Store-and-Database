@@ -12,6 +12,7 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { DmcaToolsComponent } from './dmca-tools/dmca-tools.component';
 import { UpdateUsersComponent } from './update-users/update-users.component';
+import { PublicNoticeComponent } from './public-notice/public-notice.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { UpdateUsersComponent } from './update-users/update-users.component';
     NewUserComponent,
     ShoppingCartComponent,
     DmcaToolsComponent,
-    UpdateUsersComponent
+    UpdateUsersComponent,
+    PublicNoticeComponent
   ],
   imports: [
     HttpClientModule,

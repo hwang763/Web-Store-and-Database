@@ -1,3 +1,19 @@
-<p>
-  dmca-tools works!
-</p>
+<h2>Create Notices</h2>
+<label>Notice Type:</label>
+<select #noticeType>
+    <option>Dmca</option>
+    <option>Security</option>
+</select>
+<label>Content:</label>
+<input type="textarea" name="" #noticeContent/>
+<button (click)="createNotice($event,noticeType.value,noticeContent.value)">Create Notice</button>
+
+<h2>Update Notice</h2>
+<label>Notice Type:</label>
+<select #updateType>
+    <option>Dmca</option>
+    <option>Security</option>
+</select>
+<label>Content:</label>
+<input type="textarea" name="" #updateContent/>
+<button (click)="updateNotice($event,updateType.value,updateContent.value)">Update Notice</button>
