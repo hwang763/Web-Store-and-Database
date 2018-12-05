@@ -1,5 +1,6 @@
 <button (click)="onClick()">Retrieve Private Item List</button>
 <div *ngIf="showMe=='user'||showMe=='manager'">
+    <p *ngIf="showMe=='manager'">Logged In as Manager</p>
 <h1>
     Items List (Including Price and Quantity):
     <ul class="fruits">
@@ -18,7 +19,7 @@
         <button (click)="addFruit($event,addName.value,addDescript.value,addPrice.value,addTax.value,addQuantity.value)">Add Item</button>
         
         <h2>Update and Existing Item</h2>
-        <p>Update an Item (Enter Item Name) :<input type="text" name=""/></p>
+        <p>Update an Item (Enter Item ID) :<input type="text" name=""/></p>
         <p>Description:<input type="text" name=""/></p>
         <p>Price: $<input type="number" name=""/></p>
         <p>Tax:<input type="number" name=""/>%</p>
