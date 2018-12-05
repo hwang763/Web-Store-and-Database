@@ -1,6 +1,5 @@
 <button (click)="onClick()">Retrieve Private Item List</button>
 <div *ngIf="showMe=='user'||showMe=='manager'">
-    <p *ngIf="showMe=='manager'">Logged In as Manager</p>
 <h1>
     Items List (Including Price and Quantity):
     <ul class="fruits">
@@ -30,6 +29,6 @@
         <p>Item to Delete: <input type="text" name=""/></p>
         <button>Delete</button>
         
-        
+        <app-update-users></app-update-users>
     </div>
 </div>

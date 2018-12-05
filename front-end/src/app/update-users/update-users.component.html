@@ -1,3 +1,14 @@
-<p>
-  update-users works!
-</p>
+<h2>Update a User</h2>
+<label>Email of User:</label>
+<input type="text" name="" #userEmail placeholder="User Email"/>
+<label>Change User Activation:</label>
+<select #userActive>
+    <option selected>Active</option>
+    <option>Inactive</option>
+</select>
+<label>Change Account Type:</label>
+<select #userType>
+    <option selected>User</option>
+    <option>Manager</option>
+</select>
+<button (click)="updateUser($event,userEmail.value,userActive.value,userType.value)">Update User</button>

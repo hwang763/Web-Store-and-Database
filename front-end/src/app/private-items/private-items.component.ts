@@ -22,7 +22,7 @@ export class PrivateItemsComponent implements OnInit {
    if (this.showMe=="user"){
    this.getPrivateItems();}
    else if (this.showMe=="manager"){
-     alert("Please to refer to the tools below to update the list as a manager.");
+     alert("Please to refer to the tools below provided to a manager.");
    }
    else{
      alert("This list is not available to you at this time, please login or contact a system admin!");
