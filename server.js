@@ -42,8 +42,8 @@ var itemSchema = new Schema ({
     quantity:Number,
     price:Number,
     tax:Number,
-    purchase:Number,
-    comments:[{comment:String,rating:Number}]
+    
+
     
 });
  var Item = mongoose.model("Item",itemSchema);
@@ -172,7 +172,7 @@ app.put('/api/items/:item_name',function(req,res){
     .catch(err=>console.log(err));
 });
 
-app.put('/api/purchase/item_name'),function(req,res){
+app.put('/api/purchase/:item_name'),function(req,res){
     const name = req.params.item_name;
     Item.findOne({name})
     .then(item=>{
@@ -182,7 +182,7 @@ app.put('/api/purchase/item_name'),function(req,res){
         })
         .then(item => res.json(item))
     })
-    .catch(err => res.json(item));
+    .catch(err => res.json(err));
 };
 
 app.delete('/api/items/:item_name',function(req,res){

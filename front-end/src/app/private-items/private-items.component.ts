@@ -43,6 +43,29 @@ export class PrivateItemsComponent implements OnInit {
        })
      
   }
+  
+  updateFruit(event:any,fruitName:String,fruitDescript:String,fruitPrice:Number,fruitTax:Number,fruitQuantity:Number){
+       this.http.put('/api/items/'+fruitName,{
+       name:fruitName,
+       descript:fruitDescript,
+       price:fruitPrice,
+       tax:fruitTax,
+       quantity:fruitQuantity
+     })
+     .subscribe(
+       (data:any)=>{
+         console.log(data);
+       })
+  }
+  
+  deleteFruit(event:any,fruitName:String){
+        this.http.delete('/api/items/'+fruitName,{
+            
+        }) .subscribe(
+            (data:any)=>{
+                console.log(data);
+            })     
+  }
   getPrivateItems(){} //gets the list of private items
   
 }

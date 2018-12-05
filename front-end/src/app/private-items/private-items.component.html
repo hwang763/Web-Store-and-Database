@@ -10,24 +10,26 @@
 </h1>
     <div *ngIf="showMe=='manager'">
         <h2>Add a New Item</h2>
-        <p>Name:<input type="text" name="" #addName/></p>
-        <p>Description:<input type="text" name="" #addDescript/></p>
-        <p>Price: $<input type="number" name="" #addPrice/></p>
-        <p>Tax:<input type="number" name="" #addTax/>%</p>
-        <p>Quantity:<input type="number" name="" #addQuantity/></p>
+        <label>Name:<input type="text" name="" #addName/></label>
+        <label>Description:<input type="text" name="" #addDescript/></label>
+        <br>
+        <label>Price: $<input type="number" name="" #addPrice/></label>
+        <label>Tax:<input type="number" name="" #addTax/>%</label>
+        <label>Quantity:<input type="number" name="" #addQuantity/></label>
         <button (click)="addFruit($event,addName.value,addDescript.value,addPrice.value,addTax.value,addQuantity.value)">Add Item</button>
         
         <h2>Update and Existing Item</h2>
-        <p>Update an Item (Enter Item ID) :<input type="text" name=""/></p>
-        <p>Description:<input type="text" name=""/></p>
-        <p>Price: $<input type="number" name=""/></p>
-        <p>Tax:<input type="number" name=""/>%</p>
-        <p>Quantity:<input type="number" name=""/></p>
-        <button>Update</button>
+        <label>Update an Item (Enter Item ID) :<input type="text" name="" #updateItem/></label>
+        <label>Description:<input type="text" name="" #updateDescript/></label>
+       <br>
+       <label>Price: $<input type="number" name="" #updatePrice/></label>
+        <label>Tax:<input type="number" name="" #updateTax/>%</label>
+        <label>Quantity:<input type="number" name="" #updateQ/></label>
+        <button (click)="updateFruit($event,updateItem.value,updateDescript.value,updatePrice.value,updateTax.value,updateQ.value)">Update</button>
         
         <h2>Delete an Item</h2>
-        <p>Item to Delete: <input type="text" name=""/></p>
-        <button>Delete</button>
+        <label>Item to Delete: <input type="text" name="" #deleteItem/></label>
+        <button (click)="deleteFruit($event,deleteItem.value)">Delete</button>
         
         <app-update-users></app-update-users>
     </div>
