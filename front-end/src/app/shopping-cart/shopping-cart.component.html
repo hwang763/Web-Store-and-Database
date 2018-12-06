@@ -1,6 +1,15 @@
 <button (click)="onClick()">Open Shopping Cart</button>
 <div *ngIf="showMe=='user'||showMe=='manager'">
     <h2>Shopping Cart</h2>
+    <ul>
+        <li *ngFor="let item of purchaseList">
+            <p>{{item.fruit.toUpperCase()}} Amount: {{item.pQuantity}} Price:{{item.price}}</p>
+            <button (click)="decrement(item.fruit,item.solo)">-</button>
+            <button (click)="increment(item.fruit,item.solo)">+</button>
+            <button (click)="remove(item.fruit,item.price)">Remove Fruit</button>
+        </li>
+    </ul>
+    <p>Cart Total:{{cartTotal}}</p>
     <button (click)="purchaseCart()">Purchase</button>
     <button (click)="clearCart()">Clear Cart</button>
 </div>

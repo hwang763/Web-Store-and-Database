@@ -1,16 +1,20 @@
 <button (click)="onClick()">Retrieve Private Item List</button>
 <div *ngIf="showMe=='user'||showMe=='manager'">
+    <p *ngIf="showMe=='manager'">Logged in as Manager</p>
 <h1>
     Items List (Including Price and Quantity):
 </h1>
-    <ul class="fruits">
-        <li>
-            <span class="badge"></span>
-        </li>
-    </ul>
+   <ul>
+    <li *ngFor="let item of items" >
+        <p>{{item.name.toUpperCase()}} Price:{{item.price}} Available Quantity:{{item.quantity}}</p>
+        <p>Purchase:<input type="number" name="" #purchaseNumber min=0/> </p> <button (click)="addCart(item.name,purchaseNumber.value,item.quantity,item.price)">Add to Cart</button>
+    </li>
+</ul>
+<app-shopping-cart ></app-shopping-cart>
     <app-add-comment></app-add-comment>
 
     <div *ngIf="showMe=='manager'">
+        <p>Logged in as Manager</p>
         <h2>Add a New Item</h2>
         <label>Name:<input type="text" name="" #addName/></label>
         <label>Description:<input type="text" name="" #addDescript/></label>
@@ -21,7 +25,7 @@
         <button (click)="addFruit($event,addName.value,addDescript.value,addPrice.value,addTax.value,addQuantity.value)">Add Item</button>
         
         <h2>Update and Existing Item</h2>
-        <label>Update an Item (Enter Item ID) :<input type="text" name="" #updateItem/></label>
+        <label>Update an Item :<input type="text" name="" #updateItem/></label>
         <label>Description:<input type="text" name="" #updateDescript/></label>
        <br>
        <label>Price: $<input type="number" name="" #updatePrice/></label>
@@ -32,6 +36,15 @@
         <h2>Delete an Item</h2>
         <label>Item to Delete: <input type="text" name="" #deleteItem/></label>
         <button (click)="deleteFruit($event,deleteItem.value)">Delete</button>
+        
+        <h2>Change Comment Visibility</h2>
+        <label>Comment ID:</label>
+        <input type="text" name="" #commentID/>
+        <select #commentVis>
+            <option>Visible</option>
+            <option>Invisible</option>
+        </select>
+        <button (click)="changeVis(commentID.value,commentVis.value)">Set Visibility</button>
         
         <app-update-users></app-update-users>
         <app-dmca-tools></app-dmca-tools>

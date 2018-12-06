@@ -1,0 +1,73 @@
+<button (click)="onClick()">Open Lists</button>
+<div *ngIf="showMe=='user'||showMe=='manager'">
+    <h2>Create a List</h2>
+    <label>List Name:</label>
+    <input type="text" name="" #listName/>
+    <label>Description of List</label>
+    <input type="text" name="" #listDescript/>
+    <label>Visibility to others:</label>
+    <select #visibilityBox>
+        <option selected>Private</option>
+        <option>Public</option>
+    </select>
+    <button (click)="createList(listName.value,listDescript.value,visibilityBox.value)">Create List</button>
+    
+    <h2>Edit a List</h2>
+    <label>List to Edit:</label>
+    <input type="text" name="" #editList/>
+    <label>Re-name List (optional):</label>
+    <input type="text" name="" #renameList/>
+    <label>Edit Description:</label>
+    <input type="text" name="" #editDescript/>
+    <label>Edit Visibility:</label>
+    <select #editVis>
+        <option>Private</option>
+        <option>Public</option>
+    </select>
+    <button (click)="edit(editList.value,renameList.value,editDescript.value,editVis.value)">Save</button>
+    
+    <h2>Delete a List</h2>
+    <label>List to Delete</label>
+    <input type="text" name="" #delList/>
+    <button (click)="deleteList(delList.value)">Delete List</button>
+    
+    <h2>Add an Item to a List</h2>
+    <label>Name of list to add to:</label>
+    <input type="text" name="" #addList/>
+    <label>Name of item:</label>
+    <input type="text" name="" #addItem/>
+    <label>How many of these to add:</label>
+    <input type="text" name="" #quantityItem/>
+    <button (click)="addListItem(addList.value,addItem.value,quantityItem.value)">Add Item</button>
+    
+    <h2>Modify Quantity of an Item</h2>
+    <label>Name of List:</label>
+    <input type="text" name="" #modList/>
+    <label >Name of Item:</label>
+    <input type="text" name="" #modItem/>
+    <label>New Quantity:</label>
+    <input type="text" name="" #modQ/>
+    <button (click)="modifyQ(modList.value,modItem.value,modQ.value)">Modify Quantity</button>
+    
+    <h2>Remove an Item from a List</h2>
+    <label>Name of List:</label>
+    <input type="text" name="" #itemDList/>
+    <label>Name of Item:</label>
+    <input type="text" name="" #deleteItem/>
+    <button (click)="deleteI(itemDList.value,deleteItem.value)">Delete Item</button>
+    
+<h2>Your Lists:</h2>
+<ul>
+    <li *ngFor="let list of itemList" (click)="selectItem(list)">
+        {{list.name}}
+    </li>
+</ul>
+    <app-list-detail [list]=selectedList [showMe]=showInfo [fruitInfo]=info></app-list-detail>
+    
+    <h2>Public Lists</h2>
+    <ul>
+        <li *ngFor="let list of publicList">
+         <p>User: {{list.user}} Name: {{list.name}}</p>
+        </li>
+    </ul>
+</div>

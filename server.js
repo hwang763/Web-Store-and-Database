@@ -92,11 +92,23 @@ var commentSchema = new Schema({
     user:String,
     item:String,
     value:String,
-    rating:Number
+    rating:Number,
+    visible:String
 });
 
 var Comment = mongoose.model("Comment",commentSchema);
 module.exports=Comment;
+
+var listSchema = new Schema({
+    user:String,
+    name:String,
+    descript:String,
+    visible:String,
+    fruits:[{fruit:String,quantity:String}]
+});
+
+var List = mongoose.model("List",listSchema);
+module.exports=List;
 // creating routes for the api
 
 
@@ -105,13 +117,101 @@ app.get('/api',function(req, res){
 });
 
 // the following get and post are just general requests
+app.post('/api/list',function(req, res) {
+    List.create({
+        user:req.body.user,
+        name:req.body.name,
+        descript:req.body.descript,
+        visible:req.body.visible
+    }).then(list=>{
+        res.json(list);
+        console.log(list);
+    });
+});
+
+app.put('/api/list/:name',function(req, res) {
+    var name = req.params.name;
+    var submittedUser = req.body.user;
+    List.findOne({"name":name,"user":submittedUser})
+    .then(list=>{
+        list.update({
+            user:req.body.user,
+            name:req.body.name,
+            descript:req.body.descript,
+            visible:req.body.visible
+        })
+        .then(list=>res.json(list));
+    })
+    .catch(err=>console.log(err));
+});
+
+app.put('/api/addtolist/:name',function(req, res) {
+    var name=req.params.name;
+    var user=req.body.user;
+    var fruit = {"fruit":req.body.fruit,"quantity":req.body.quantity};
+    List.findOne({"user":user,"name":name})
+    .then(list=>{
+        console.log(fruit);
+        console.log(list);
+        list.fruits.push(fruit);
+        res.json(list);
+    })
+    .catch(err=>console.log(err));
+});
+
+app.put('/api/deleteFrom/:name',function(req, res) {
+    var name=req.params.name;
+    var user=req.body.user;
+    List.findOne({"user":user,"name":name})
+    .then(list=>{
+        console.log(list);
+        list.fruits.pull({"fruit":req.body.fruit});
+        res.json(list);
+    })
+    .catch(err=>console.log(err));
+});
+
+app.get('/api/list/:user',function(req, res) {
+    var listUser=req.params.user;
+    List.find({user:listUser}).exec(function(err,list){
+        if(!err){
+            res.json(list);
+            console.log(list);
+        }
+        else 
+        console.log(err);
+    });
+    
+    
+});
+
+app.get('/api/list',function(req, res) {
+    List.find({'visible':"public"}).exec(function(err,list){
+        if(!err){
+            res.json(list);
+        }
+        else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/deleteList/:name',function(req, res) {
+    var name=req.params.name;
+    var user=req.body.user;
+    List.findOne({"name":name,"user":user})
+    .then(list=>{
+        list.remove().then(list=>res.json("deleted"));
+    }).catch(err=>console.log(err));
+});
 
 app.post('/api/comment',function(req,res){
     Comment.create({
         user:req.body.user,
         item:req.body.item,
         value:req.body.value,
-        rating:req.body.rating
+        rating:req.body.rating,
+        visibility:"visible"
     }).then(comment=>{
         res.json(comment);
         console.log(comment);
@@ -130,6 +230,16 @@ app.get('/api/comment/:item_name',function(req, res) {
             console.log(err);
     });
 });
+
+app.put('/api/comment/vis/:id',function(req, res) {
+    var commentID=req.params.id;
+    Comment.findOne({"_id":commentID})
+    .then(comment=>{
+        comment.update({
+            visible:req.body.visible
+        }).then(comment=>res.json(comment));
+    }).catch(err=>console.log(err));
+}); 
 
 app.post('/api/Takedown',function(req,res){
     Takedown.create({

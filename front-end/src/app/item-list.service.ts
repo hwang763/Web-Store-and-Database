@@ -6,19 +6,25 @@ import {Fruits} from './fruits'
 })
 export class ItemListService {
   public accountType:string;
-  
-  setAccount(type:string){
+  public userName:String
+  setAccount(type:string,user:String){
    if (type=='user'){
      this.accountType="user";
+     this.userName=user;
    }
    if (type=='manager'){
      this.accountType="manager";
+     this.userName=user;
    }
    console.log(this.accountType);
+   console.log(this.userName);
   }
   
   getAccountType(){
     return this.accountType;
+  }
+  getUsername(){
+      return this.userName;
   }
   
   addFruit(fruitName:String,fruitDescript:String,fruitPrice:Number,fruitTax:Number,fruitQuantity:Number){

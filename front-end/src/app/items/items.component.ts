@@ -9,9 +9,9 @@ import {Comment} from '../comment';
 })
 export class ItemsComponent implements OnInit {
   private items:Fruits[]=[];
-  private fruitComments:Comment[]=[];
   private selectedFruit:Fruits;
   private showInfo:boolean=false;
+  private commentList:Comment[]=[];
   constructor(private http:HttpClient) {
     this.http.get('/api/items')
     .subscribe((data:any)=>{
@@ -31,33 +31,31 @@ selectFruit(item:Fruits){
 
   ngOnInit() {
   }
-  parseData(jsonData: string) {
+  parseData(jsonData:JSON) {
     for (let i = 0; i < 10; i++) {
-     var tempArray:Comment[]; 
-      this.http.get('/api/comment/'+jsonData[i].name)
-      .subscribe((comment:any)=>{
-        if(comment.length==0){
-          console.log("hi");
-          const data = new Fruits(jsonData[i].name, jsonData[i].descript,jsonData[i].price,jsonData[i].tax,jsonData[i].quantity,jsonData[i].purchase,tempArray);
+        const data = new Fruits(jsonData[i].name, jsonData[i].descript,jsonData[i].price,jsonData[i].quantity,jsonData[i].purchase,this.commentList);
           if (data.quantity>0){
             this.items.push(data);
           }
         }
-        else if (comment.length>0) {
-          for (let i=0 ; i<5;i++){
-            const temp = new Comment(comment[i].user,comment[i].item,comment[i].value,comment[i].rating);
-            tempArray[i]=temp;
-           }
-        const data = new Fruits(jsonData[i].name, jsonData[i].descript,jsonData[i].price,jsonData[i].tax,jsonData[i].quantity,jsonData[i].purchase,tempArray);
-         
-          if (data.quantity>0){
-            this.items.push(data);
-          }
+      }
+  getComment(fruit:String){
+    this.http.get('/api/comment/:item_name')
+    .subscribe((comment:any)=>{
+      if(comment.length<0){
+        console.log("empty");
+      }
+      else{
+        for (var i=0;i<comment.length;i++){
+          var temp = new Comment(comment[i].user,comment[i].item,comment[i].value,comment[i].rating);
+          this.commentList.push(temp);
         }
-      })
-         
-    }
-  }
+      }
+      
+    })
+  }  
+    
+  
   
   getItems(){} //this one returns names and description
   

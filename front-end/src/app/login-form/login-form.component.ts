@@ -38,12 +38,12 @@ export class LoginFormComponent implements OnInit {
          }
          else if(data=="user"){
            this.userType="user";
-           this.itemLisService.setAccount(this.userType);
+           this.itemLisService.setAccount(this.userType,userEmail);
            alert("You have logged in as a general user! Welcome "+userEmail);
          }
          else if (data=="manager"){
            this.userType="manager";
-           this.itemLisService.setAccount(this.userType);
+           this.itemLisService.setAccount(this.userType,userEmail);
            alert("You have logged in as a manager! Welcome "+userEmail);
          }
        })

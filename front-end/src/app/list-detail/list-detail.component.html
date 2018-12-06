@@ -1,0 +1,10 @@
+<div *ngIf="showMe">
+<p>List Name:{{list.name}}</p>
+<p>List Description:{{list.descript}}</p>
+<ul>
+    <li *ngFor="let fruit of fruitInfo" >
+        <p>{{fruit.fruit}}</p>
+        <p>{{fruit.quantity}}</p>
+    </li>
+</ul>
+</div>

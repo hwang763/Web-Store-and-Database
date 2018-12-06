@@ -15,7 +15,7 @@ export class PublicNoticeComponent implements OnInit {
       console.log(data);
       if (noticeType=="Security"){
         console.log(data.descript);
-        this.dmca=data.decript;
+        this.security=data.decript;
       }
       else if(noticeType=="Dmca"){
         this.dmca=data.descript;

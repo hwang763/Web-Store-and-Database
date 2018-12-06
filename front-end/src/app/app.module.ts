@@ -16,6 +16,8 @@ import { PublicNoticeComponent } from './public-notice/public-notice.component';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { CommentComponent } from './comment/comment.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
+import { ListComponent } from './list/list.component';
+import { ListDetailComponent } from './list-detail/list-detail.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
     PublicNoticeComponent,
     ItemDetailComponent,
     CommentComponent,
-    AddCommentComponent
+    AddCommentComponent,
+    ListComponent,
+    ListDetailComponent
   ],
   imports: [
     HttpClientModule,
