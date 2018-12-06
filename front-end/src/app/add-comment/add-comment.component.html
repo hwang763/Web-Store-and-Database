@@ -1,0 +1,16 @@
+<h2>Add a Review To An Item</h2>
+<label>Enter your Username:</label>
+<input type="text" name="" #userName/>
+<label>Enter Item Name:</label>
+<input type="text" name="" #itemName/>
+<label>Enter Your Review:</label>
+<input type="text" name="" #reviewBox/>
+<label>Rating:</label>
+<select #ratingBox>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select>
+<button (click)="saveRaview(userName.value,itemName.value,reviewBox.value,ratingBox.value)">Enter Review</button>

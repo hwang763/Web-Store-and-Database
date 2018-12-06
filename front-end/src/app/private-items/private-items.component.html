@@ -2,12 +2,14 @@
 <div *ngIf="showMe=='user'||showMe=='manager'">
 <h1>
     Items List (Including Price and Quantity):
+</h1>
     <ul class="fruits">
         <li>
             <span class="badge"></span>
         </li>
     </ul>
-</h1>
+    <app-add-comment></app-add-comment>
+
     <div *ngIf="showMe=='manager'">
         <h2>Add a New Item</h2>
         <label>Name:<input type="text" name="" #addName/></label>

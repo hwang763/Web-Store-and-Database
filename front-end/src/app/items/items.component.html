@@ -1,5 +1,10 @@
 <h1>
-    Our Product Line:  
+    Our Product Line (Listed In Descending Number of Purchases):  
 </h1>
+<ul>
+    <li *ngFor="let item of items" (click)="selectFruit(item)">
+        {{item.name.toUpperCase()}}
+    </li>
+</ul>
 
-
+<app-item-detail [item]=selectedFruit [showMe]=showInfo></app-item-detail>

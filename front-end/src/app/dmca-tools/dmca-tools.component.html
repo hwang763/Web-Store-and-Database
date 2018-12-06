@@ -17,3 +17,49 @@
 <label>Content:</label>
 <input type="textarea" name="" #updateContent/>
 <button (click)="updateNotice($event,updateType.value,updateContent.value)">Update Notice</button>
+<br>
+<br>
+<button (click)="showWorkflow()">DMCA Workflow</button>
+<button (click)="showInstructions()">How to Use the Tools Below</button>
+<br>
+<h2>Record Takedown Request</h2>
+<label>Requestee:</label>
+<input type="text" name="" #requestEmail/>
+<label>Issue Code:</label>
+<input type="text" name="" #requestCode/>
+<label>Issue Reported:</label>
+<input type="text" name="" #requestIssue/>
+<button (click)="recordRequest(requestEmail.value,requestCode.value,requestIssue.value)">Record Request</button>
+
+<h2>Record Infringement Notices</h2>
+<label>Issue Code:</label>
+<input type="text" name="" #issueCode/>
+<label>Sent To:</label>
+<input type="text" name="" #infringementEmail/>
+<label>Infringement Issue:</label>
+<input type="text" name="" #issueFound/>
+<button (click)="logInfringement(issueCode.value,infringementEmail.value,issueFound.value)">Log Notice</button>
+
+<h2>Record Disputes</h2>
+<label>Issue Code:</label>
+<input type="text" name="" #disputeCode/>
+<label>Sender</label>
+<input type="text" name="" #senderEmail/>
+<label>Claim:</label>
+<input type="text" name="" #disputeClaim/>
+<button (click)="recordDispute(disputeCode.value, senderEmail.value, disputeClaim.value)">Record Dispute</button>
+
+<h2>Send Takedown Notice</h2>
+<label>Send To:</label>
+<input type="text" name="" #takedownEmail/>
+<label>Signature:</label>
+<input type="text" name="" #sigBox/>
+<label>Identification of Work:</label>
+<input type="text" name="" #realBox/>
+<label>Identification of Infringement:</label>
+<input type="text" name="" #fakeBox/>
+<label>Contact At:</label>
+<input type="text" name="" #contactInfo/>
+<p><input type="radio" name="" value="true" #faithCheck/>I believe in good faith that use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law</p>
+<p><input type="radio" name="" value="true" #accurateCheck/>I swear the information in the notification is accurate, and under penalty of perjury, that the complaining party is authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.</p>
+<button (click)="sendTakedown(takedownEmail.value,sigBox.value,realBox.value,fakeBox.value,contactInfo.value,faithCheck,accurateCheck)">Send Takedown Notice</button>

@@ -42,9 +42,7 @@ var itemSchema = new Schema ({
     quantity:Number,
     price:Number,
     tax:Number,
-    
-
-    
+    purchase:Number
 });
  var Item = mongoose.model("Item",itemSchema);
 module.exports = Item; 
@@ -55,7 +53,7 @@ var userSchema = new Schema({
     type:String,
     activation:String
     
-})
+});
 
 var User = mongoose.model("User",userSchema);
 module.exports=User;
@@ -63,18 +61,42 @@ module.exports=User;
 var dmcaSchema = new Schema({
     type:String,
     descript:String
-})
+});
 
 var DMCA = mongoose.model("DMCA",dmcaSchema);
 module.exports=DMCA;
 
 var disputeSchema = new Schema({
     type:String,
-    decript:String
-})
+    descript:String,
+    code:String,
+    sender:String,
+    sentTo:String
+});
 
 var Dispute = mongoose.model("Dispute",disputeSchema);
 module.exports=Dispute;
+
+var takedownSchema = new Schema({
+    sendTo:String,
+    signature:String,
+    work:String,
+    infringement:String,
+    contact:String
+});
+
+var Takedown = mongoose.model("Takedown",takedownSchema);
+module.exports=Takedown;
+
+var commentSchema = new Schema({
+    user:String,
+    item:String,
+    value:String,
+    rating:Number
+});
+
+var Comment = mongoose.model("Comment",commentSchema);
+module.exports=Comment;
 // creating routes for the api
 
 
@@ -83,6 +105,65 @@ app.get('/api',function(req, res){
 });
 
 // the following get and post are just general requests
+
+app.post('/api/comment',function(req,res){
+    Comment.create({
+        user:req.body.user,
+        item:req.body.item,
+        value:req.body.value,
+        rating:req.body.rating
+    }).then(comment=>{
+        res.json(comment);
+        console.log(comment);
+    });
+});
+
+app.get('/api/comment/:item_name',function(req, res) {
+    var selectedItem=req.params.item_name;
+    Comment.find({item:selectedItem}).sort({rating:-1}).exec(function(err,comment){
+        if (!err){
+            res.json(comment);
+        if(comment==[]){
+            console.log("empty");
+        }}
+        else
+            console.log(err);
+    });
+});
+
+app.post('/api/Takedown',function(req,res){
+    Takedown.create({
+        sendTo:req.body.sendTo,
+        signature:req.body.signature,
+        work:req.body.work,
+        infringement:req.body.infringement,
+        contact:req.body.contact
+    }).then(takedown=>{
+        res.json(takedown);
+        console.log(takedown);
+    });
+});
+
+app.get('/api/Request/:notice_code',function(req, res) {
+    var code = req.params.notice_code;
+    Dispute.findOne({code})
+    .then(dispute=>res.json(dispute))
+    .catch(err=>console.log(err));
+});
+
+app.post('/api/Request',function(req,res){
+    Dispute.create({
+        type:req.body.type,
+        descript:req.body.descript,
+        code:req.body.code,
+        sender:req.body.sender,
+        sentTo:req.body.sentTo
+    }).then(dispute=>{
+        res.json(dispute);
+        console.log(dispute);
+    });
+});
+
 app.get('/api/DMCA/:notice_type',function(req, res) {
     var type = req.params.notice_type;
     DMCA.findOne({type})
@@ -114,8 +195,11 @@ app.put('/api/DMCA/:notice_type',function(req,res){
 
 app.get('/api/items',cors(),function(req,res,next){
     console.log('getting activities');
-    Item.find({}).then(eachOne=>{
-        res.json(eachOne)
+    Item.find().sort({purchase:-1}).exec(function(err,item){
+        if (!err)
+            res.json(item);
+        else
+            console.log(err);
     });
 });
 
@@ -125,7 +209,8 @@ app.post('/api/items',function(req,res,next){
         descript :req.body.descript,
         quantity:req.body.quantity,
         price: req.body.price,
-        tax: req.body.tax
+        tax: req.body.tax,
+        purchase:req.body.purchase
     }).then(item=>{
         res.json(item)
         console.log(item);
@@ -205,7 +290,6 @@ app.put('/api/items/:item_name',function(req,res){
     Item.findOne({name})
     .then(item => {
         item.update({
-            name : req.body.name,
             descript:req.body.descript,
             quantity: req.body.quantity,
             price:req.body.price,
@@ -236,6 +320,8 @@ app.delete('/api/items/:item_name',function(req,res){
         item.remove().then( ()=>res.json("Item deleted"))
     });
 });
+
+
 
 
 //starting our server 

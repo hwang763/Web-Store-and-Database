@@ -13,6 +13,9 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { DmcaToolsComponent } from './dmca-tools/dmca-tools.component';
 import { UpdateUsersComponent } from './update-users/update-users.component';
 import { PublicNoticeComponent } from './public-notice/public-notice.component';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
+import { CommentComponent } from './comment/comment.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { PublicNoticeComponent } from './public-notice/public-notice.component';
     ShoppingCartComponent,
     DmcaToolsComponent,
     UpdateUsersComponent,
-    PublicNoticeComponent
+    PublicNoticeComponent,
+    ItemDetailComponent,
+    CommentComponent,
+    AddCommentComponent
   ],
   imports: [
     HttpClientModule,
