@@ -40,6 +40,7 @@ import { ListDetailComponent } from './list-detail/list-detail.component';
     ListDetailComponent
   ],
   imports: [
+    
     HttpClientModule,
     BrowserModule,
     AppRoutingModule

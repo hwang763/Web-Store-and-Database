@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ItemListService} from '../item-list.service'
 import {Fruits} from '../fruits';
 import {HttpClient} from '@angular/common/http';
-import {ShoppingService} from '../shopping.service'
+import {ShoppingService} from '../shopping.service';
+
 @Component({
   selector: 'app-private-items',
   templateUrl: './private-items.component.html',
@@ -14,6 +15,9 @@ export class PrivateItemsComponent implements OnInit {
   private selectedFruit:Fruits;
   private showInfo:boolean=false;
   private fruitQuantity:Array<{fruit:String,quantity:Number}>=[];
+    databaseQ:any;
+    noBuy:boolean;
+    tempQ:any;
   
   
   constructor(private itemListService:ItemListService, private http:HttpClient, private shoppingService:ShoppingService) { 
@@ -70,22 +74,43 @@ export class PrivateItemsComponent implements OnInit {
   
   addCart(item:String,purchaseNumber:number,rquantity:number,price:number){
       console.log(item);
-      console.log(purchaseNumber);
+      //this.checkQuantity(item,purchaseNumber);
+      //console.log(this.noBuy)
+      
       if(purchaseNumber==0){
           alert("Enter a value greater than 0")
       }
-      else if(purchaseNumber>rquantity){
-          alert("Please enter a value lower than the available stock!")
-      }
       else{
-          var totalPrice = purchaseNumber*price;
-          console.log(price);
-          this.shoppingService.setList({fruit:item,pQuantity:purchaseNumber,quantity:rquantity,price:totalPrice,solo:price})
-          
+            console.log(item);
+            this.http.get('/api/items/'+item)
+            .subscribe((data:any)=>{
+             this.databaseQ=data.quantity;
+            console.log(purchaseNumber>this.databaseQ);
+            if(purchaseNumber>this.databaseQ){
+            console.log("greater");
+            this.noBuy=true;
+            console.log(this.noBuy);
+            }
+            if (purchaseNumber<=this.databaseQ){
+            this.noBuy= false;
+            console.log(this.noBuy);
+            }
+            if(this.noBuy){
+                alert("Please enter a value lower than the available quantity!");
+            }
+            else{var totalPrice = purchaseNumber*price;
+            console.log(price);
+            this.shoppingService.setList({fruit:item,pQuantity:purchaseNumber,quantity:rquantity,price:totalPrice,solo:price})
+            this.shoppingService.getTotal();
+                
+            }
+            })
+            
           
       }
       
   }
+  
   
   updateFruit(event:any,fruitName:String,fruitDescript:String,fruitPrice:Number,fruitTax:Number,fruitQuantity:Number){
        this.http.put('/api/items/'+fruitName,{
@@ -138,6 +163,37 @@ export class PrivateItemsComponent implements OnInit {
           }
         }
       }
-         
+     
+//   checkQuantity(fruit:String,quantity:number):any{
+   
+//   console.log(fruit);
+//   this.http.get('/api/items/'+fruit)
+//   .subscribe((data:any)=>{
+//      this.databaseQ=data.quantity;
+//      console.log(quantity>this.databaseQ);
+//      if(quantity>this.databaseQ){
+//       console.log("greater");
+//      this.noBuy=true;
+//      console.log(this.noBuy);
+//   }
+//   else if (quantity<this.databaseQ){
+//      this.noBuy= false;
+//      console.log(this.noBuy);
+//   }
+//   })
+//  }      
   
+  updateQ(fruit:String,quantity:number){
+      this.http.get('/api/items/'+fruit)
+      .subscribe((data:any)=>{
+          this.tempQ=data.quantity;
+      })
+      this.tempQ=this.tempQ-1;
+      console.log(this.tempQ);
+      this.http.put('/api/update/'+fruit,{
+          quantity:this.tempQ
+      }).subscribe((data:any)=>{
+          console.log(data);
+      })
+  }
 }

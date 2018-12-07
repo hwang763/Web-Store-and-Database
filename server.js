@@ -205,6 +205,14 @@ app.post('/api/deleteList/:name',function(req, res) {
     }).catch(err=>console.log(err));
 });
 
+app.get('/api/quantity/:item_name',function(req,res){
+    var item = req.params.item_name;
+    Item.findOne({item})
+    .then(item=>{
+        res.json(item.quantity);
+    }).catch(err=>console.log(err));
+});
+
 app.post('/api/comment',function(req,res){
     Comment.create({
         user:req.body.user,
@@ -383,7 +391,7 @@ app.route('/api/login/:email').put((req,res)=>{
             activation: req.body.activation,
             type: req.body.type
         })
-        .then(user => res.json(user))
+        .then(user => res.json(user));
     })
     .catch(err => console.log(err));
 });
@@ -405,29 +413,40 @@ app.put('/api/items/:item_name',function(req,res){
             price:req.body.price,
             tax:req.body.tax
         })
-        .then(item=>res.json(item))
+        .then(item=>res.json(item));
     })
     .catch(err=>console.log(err));
 });
 
-app.put('/api/purchase/:item_name'),function(req,res){
-    const name = req.params.item_name;
+app.put('/api/update/:item_name',function(req, res) {
+    console.log("hi");
+    var name=req.params.item_name;
     Item.findOne({name})
     .then(item=>{
         item.update({
-            count: req.body.count
-        
-        })
-        .then(item => res.json(item))
-    })
-    .catch(err => res.json(err));
-};
+            //purchase:req.body.purchase,
+            quantity:req.body.quantity
+        }).then(item=>res.json(item));
+    }).catch(err=>console.log(err));
+});
+
+app.put('/api/buy/:item_name',function(req, res) {
+    console.log("hi");
+    var name=req.params.item_name;
+    Item.findOne({name})
+    .then(item=>{
+        item.purchase++;
+        item.update({
+            quantity:req.body.quantity
+        }).then(item=>res.json(item));
+    }).catch(err=>console.log(err));
+});
 
 app.delete('/api/items/:item_name',function(req,res){
     	var name = req.params.item_name;
     Item.findOne({name})
     .then (item=> {
-        item.remove().then( ()=>res.json("Item deleted"))
+        item.remove().then( ()=>res.json("Item deleted"));
     });
 });
 

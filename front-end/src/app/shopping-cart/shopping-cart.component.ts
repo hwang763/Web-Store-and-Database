@@ -1,6 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import {ShoppingService} from '../shopping.service';
 import {ItemListService} from '../item-list.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,6 +12,10 @@ export class ShoppingCartComponent implements OnInit {
  purchaseList:Array<{fruit:String,pQuantity:number,quantity:number,price:number,solo:string}>=[];
  showMe:String;
   cartTotal:any;
+  databaseQ:string;
+    noBuy:boolean;
+    tempQ:any;
+    tempPurQ:string;
  onClick(){
    this.showMe= this.itemListService.getAccountType();
    if(this.showMe!="user"&&this.showMe!="manager"){
@@ -23,12 +28,48 @@ export class ShoppingCartComponent implements OnInit {
   
   purchaseCart(){
       var purchased=confirm("Purchase Items In Your Cart");
-      if(purchased==true){
+      var quantityMatch:boolean=true;
+      for(var i=0;i<this.purchaseList.length;i++){
+       this.tempPurQ=String(this.purchaseList[i].pQuantity);
+            this.http.get('/api/items/'+this.purchaseList[i].fruit)
+            .subscribe((data:any)=>{
+             this.databaseQ=data.quantity;
+             console.log("database:"+this.databaseQ+"purchased:"+this.tempPurQ);
+             console.log(parseFloat(this.tempPurQ)>parseFloat(this.databaseQ))
+             if (parseFloat(this.tempPurQ)>parseFloat(this.databaseQ)){
+              quantityMatch=false;
+             }
+             
+            })
+            if (!quantityMatch)
+             alert("The amount of "+this.purchaseList[i].fruit+" in your cart is higher than the amount available! Please fix this!");
+             break;
+      }
+      
+      if(purchased==true&&quantityMatch==true){
           
-          this.cartTotal=this.shoppingService.getTotal();
+          this.getCart();
+          console.log(JSON.stringify(this.purchaseList));
+          for(var i=0;i<this.purchaseList.length;i++){
+            this.tempPurQ=String(this.purchaseList[i].pQuantity);
+            this.http.get('/api/items/'+this.purchaseList[i].fruit)
+            .subscribe((data:any)=>{
+             this.databaseQ=String(data.quantity);})
+             console.log("database:"+this.databaseQ+"purchased:"+this.tempPurQ);
+            this.tempQ=parseFloat(this.databaseQ)-parseFloat(this.tempPurQ);
+            console.log("new quantity:"+this.tempQ);
+            this.http.put('/api/buy/'+this.purchaseList[i].fruit,{
+             quantity:this.tempQ
+            }).subscribe((data:any)=>{
+             console.log(data);
+            })
+          }
+          alert("Purchase Successful!Your cart total was:$"+this.cartTotal);
+          alert("Here is your reciept:"+JSON.stringify(this.purchaseList));
           this.shoppingService.clearList();
           this.getCart();
-          alert(this.purchaseList);
+          console.log(this.cartTotal);
+          
       }
       else{
           
@@ -68,7 +109,7 @@ export class ShoppingCartComponent implements OnInit {
       this.purchaseList=this.shoppingService.getList();
       this.cartTotal=this.shoppingService.getTotal();
   }
-  constructor(private itemListService:ItemListService, private shoppingService:ShoppingService) { 
+  constructor(private itemListService:ItemListService, private shoppingService:ShoppingService, private http:HttpClient) { 
     
   }
 
