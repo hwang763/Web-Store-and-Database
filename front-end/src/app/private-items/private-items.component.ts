@@ -111,6 +111,20 @@ export class PrivateItemsComponent implements OnInit {
       
   }
   
+  takedownItem(fruit:String,thisVisible:String){
+      if (fruit==""){
+          alert("Please enter a fruit name!");
+      }
+      else{
+          this.http.put('/api/takedownItem/'+fruit,{
+              visible:thisVisible
+          })
+          .subscribe(
+              (data:any)=>{
+                  console.log(data);
+              })
+      }
+  }
   
   updateFruit(event:any,fruitName:String,fruitDescript:String,fruitPrice:Number,fruitTax:Number,fruitQuantity:Number){
        this.http.put('/api/items/'+fruitName,{
@@ -158,7 +172,7 @@ export class PrivateItemsComponent implements OnInit {
     for (var i = 0; i < jsonData.length; i++) {
         const data = new Fruits(jsonData[i].name, jsonData[i].descript,jsonData[i].price,jsonData[i].quantity,jsonData[i].purchase,jsonData[i].comment);
          
-          if (data.quantity>0){
+          if (data.quantity>0&&jsonData[i].visible=="visible"){
             this.items.push(data);
           }
         }

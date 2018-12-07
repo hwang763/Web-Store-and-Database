@@ -16,6 +16,7 @@ export class ItemsComponent implements OnInit {
     this.http.get('/api/items')
     .subscribe((data:any)=>{
       console.log(data[0].purchase);
+     
       this.parseData(data);
       console.log(this.items);
     })
@@ -34,7 +35,7 @@ selectFruit(item:Fruits){
   parseData(jsonData:JSON) {
     for (let i = 0; i < 10; i++) {
         const data = new Fruits(jsonData[i].name, jsonData[i].descript,jsonData[i].price,jsonData[i].quantity,jsonData[i].purchase,this.commentList);
-          if (data.quantity>0){
+          if (data.quantity>0&&jsonData[i].visible=="visible"){
             this.items.push(data);
           }
         }

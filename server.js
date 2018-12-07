@@ -42,7 +42,8 @@ var itemSchema = new Schema ({
     quantity:Number,
     price:Number,
     tax:Number,
-    purchase:Number
+    purchase:0,
+    visible:String
 });
  var Item = mongoose.model("Item",itemSchema);
 module.exports = Item; 
@@ -328,12 +329,26 @@ app.post('/api/items',function(req,res,next){
         quantity:req.body.quantity,
         price: req.body.price,
         tax: req.body.tax,
-        purchase:req.body.purchase
+        purchase:req.body.purchase,
+        visible:"visible"
     }).then(item=>{
-        res.json(item)
+        res.json(item);
         console.log(item);
     }); 
 });
+
+app.put('/api/takedownItem/:item_name',function(req, res) {
+    var name=req.params.item_name;
+    Item.findOne({name})
+    .then(item=>{
+        item.update({
+            visible:req.body.visible
+        })
+        .then(item=>res.json(item));
+    }).catch(err=>console.log(err));
+});
+    
+
 
 // the following requests are for specific IDs
 
